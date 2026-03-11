@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古月ai智能体-复古插画海报生成器</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Microsoft YaHei",sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+color:#fff;
+padding:40px;
+}
+
+.container{
+max-width:1100px;
+margin:auto;
+}
+
+h1{
+text-align:center;
+margin-bottom:30px;
+font-size:32px;
+letter-spacing:2px;
+}
+
+.inputBox{
+background:#0f172a;
+padding:25px;
+border-radius:10px;
+margin-bottom:30px;
+box-shadow:0 0 20px rgba(0,0,0,0.4);
+}
+
+.inputBox input{
+width:100%;
+padding:12px;
+margin-bottom:15px;
+border:none;
+border-radius:6px;
+font-size:16px;
+}
+
+button{
+background:#3b82f6;
+border:none;
+padding:12px 20px;
+border-radius:6px;
+color:#fff;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#2563eb;
+}
+
+.result{
+margin-top:20px;
+}
+
+.card{
+background:#020617;
+padding:20px;
+border-radius:10px;
+margin-bottom:18px;
+box-shadow:0 0 15px rgba(0,0,0,0.4);
+position:relative;
+line-height:1.7;
+}
+
+.copyBtn{
+position:absolute;
+right:15px;
+top:15px;
+background:#22c55e;
+padding:6px 12px;
+font-size:14px;
+border-radius:5px;
+}
+
+.copyBtn:hover{
+background:#16a34a;
+}
+
+.number{
+font-size:18px;
+color:#38bdf8;
+margin-bottom:8px;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+<h1>古月ai智能体-复古插画海报生成器</h1>
+
+<div class="inputBox">
+<input id="title" placeholder="输入海报主题">
+<input id="subtitle" placeholder="输入海报副标题">
+<input id="type" placeholder="输入海报类型（如节日活动 / 产品推广 / 品牌宣传）">
+<button onclick="generate()">生成 20 组提示词</button>
+</div>
+
+<div id="result" class="result"></div>
+</div>
+
+<script>
+function random(arr){
+return arr[Math.floor(Math.random()*arr.length)]
+}
+
+function generate(){
+let title=document.getElementById("title").value
+let subtitle=document.getElementById("subtitle").value
+let type=document.getElementById("type").value
+
+if(title==""){alert("请输入主题");return}
+
+let assist=[
+"限时活动","新品发布","欢迎体验","限量优惠",
+"城市生活节","品牌推荐","复古时光","经典回归",
+"艺术生活","夏日限定","特别企划"
+]
+
+let visuals=[
+"手绘人物","复古摩托车","咖啡杯","复古相机",
+"猫咪插画","花朵装饰","城市街景","复古唱片",
+"小鸟与植物","手绘星星符号"
+]
+
+let technique=[
+"扁平色块分层构图","粗线稿勾勒轮廓","渐变网点模拟晨雾",
+"颗粒纹理表现复古海报质感","柔和光影表现空间层次",
+"复古印刷风笔刷","平面透视构图"
+]
+
+let layout=[
+"主标题居中大字","副标题在主标题下方",
+"辅助文字环绕画面","标题占画面30%",
+"手写风字体","复古海报字体"
+]
+
+let result=document.getElementById("result")
+result.innerHTML=""
+
+// 这里改成 20 组
+for(let i=1;i<=20;i++){
+let text=`主标题：${title}，
+副标题：${subtitle}，
+海报类型：${type}，
+辅助文字：${random(assist)}，
+核心视觉元素：${random(visuals)}、${random(visuals)}、${random(visuals)}，
+插画手法：${random(technique)}、${random(technique)}、${random(technique)}，
+文字布局：${random(layout)}、${random(layout)}，
+风格：二维插画风、绘本感、色彩鲜明、光影柔和、层次丰富、复古海报质感。`
+
+let card=document.createElement("div")
+card.className="card"
+
+card.innerHTML=`
+<div class="number">提示词 ${i}</div>
+<button class="copyBtn" onclick="copyText(this)">复制</button>
+<div>${text}</div>
+`
+result.appendChild(card)
+}
+}
+
+function copyText(btn){
+let text=btn.parentElement.innerText.replace("复制","")
+navigator.clipboard.writeText(text)
+btn.innerText="已复制"
+setTimeout(()=>{
+btn.innerText="复制"
+},3000)
+}
+</script>
+
+</body>
+</html>
