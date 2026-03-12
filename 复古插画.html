@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>古月ai智能体-复古插画海报生成器</title>
+<title古月ai智能体-复古插画海报生成器</title>
 
 <style>
 *{
@@ -39,13 +39,19 @@ margin-bottom:30px;
 box-shadow:0 0 20px rgba(0,0,0,0.4);
 }
 
-.inputBox input{
+.inputBox input,
+.inputBox textarea{
 width:100%;
 padding:12px;
 margin-bottom:15px;
 border:none;
 border-radius:6px;
 font-size:16px;
+}
+
+.inputBox textarea{
+height:80px;
+resize:none;
 }
 
 button{
@@ -106,6 +112,7 @@ margin-bottom:8px;
 <input id="title" placeholder="输入海报主题">
 <input id="subtitle" placeholder="输入海报副标题">
 <input id="type" placeholder="输入海报类型（如节日活动 / 产品推广 / 品牌宣传）">
+<textarea id="content" placeholder="输入辅助文字/说明/口号等内容（可选）"></textarea>
 <button onclick="generate()">生成 20 组提示词</button>
 </div>
 
@@ -121,6 +128,7 @@ function generate(){
 let title=document.getElementById("title").value
 let subtitle=document.getElementById("subtitle").value
 let type=document.getElementById("type").value
+let content=document.getElementById("content").value
 
 if(title==""){alert("请输入主题");return}
 
@@ -151,12 +159,13 @@ let layout=[
 let result=document.getElementById("result")
 result.innerHTML=""
 
-// 这里改成 20 组
 for(let i=1;i<=20;i++){
+let assistText = content ? content : random(assist)
+
 let text=`主标题：${title}，
 副标题：${subtitle}，
 海报类型：${type}，
-辅助文字：${random(assist)}，
+辅助文字：${assistText}，
 核心视觉元素：${random(visuals)}、${random(visuals)}、${random(visuals)}，
 插画手法：${random(technique)}、${random(technique)}、${random(technique)}，
 文字布局：${random(layout)}、${random(layout)}，
